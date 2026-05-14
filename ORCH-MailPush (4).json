@@ -1,0 +1,109 @@
+{
+  "DR-MailPush-Etapas": {
+    "tableId": "F0005",
+    "rowset": [
+      {
+        "CodigoEtapa": "      103",
+        "NombreEtapa": "Llegada"
+      },
+      {
+        "CodigoEtapa": "      142",
+        "NombreEtapa": "Documentación"
+      },
+      {
+        "CodigoEtapa": "      152",
+        "NombreEtapa": "Registrado"
+      },
+      {
+        "CodigoEtapa": "      175",
+        "NombreEtapa": "Reconocido"
+      },
+      {
+        "CodigoEtapa": "      184",
+        "NombreEtapa": "Validado"
+      },
+      {
+        "CodigoEtapa": "      188",
+        "NombreEtapa": "Despacho"
+      }
+    ],
+    "records": 6,
+    "moreRecords": false
+  },
+  "NombreCliente": "INDUSTRIA LACTEA VENEZOLANA, C.A.",
+  "NumeroManifiesto": "I429720",
+  "CiudadOrigen": "BELGRADE (BEOGRAD)",
+  "CiudadDestino": "MAIQUETIA",
+  "DR-MailPush-V55SA176": {
+    "tableId": "V55SA176",
+    "rowset": [
+      {
+        "CodigoEtapa": 103,
+        "SecuenciaEtapa": 11,
+        "ExpedienteHouse": 20260150000073,
+        "ExpedienteAduana": 0,
+        "NombreEtapa": "FECHA DE LLEGADA",
+        "FechaEtapa": "08/03/2026",
+        "HoraEtapa": 100450
+      },
+      {
+        "CodigoEtapa": 142,
+        "SecuenciaEtapa": 24,
+        "ExpedienteHouse": 20260150000073,
+        "ExpedienteAduana": 20265140000069,
+        "NombreEtapa": "DOCUMENTACION COMPLETA PARA NACIONALIZAR",
+        "FechaEtapa": "03/04/2026",
+        "HoraEtapa": 90000
+      },
+      {
+        "CodigoEtapa": 152,
+        "SecuenciaEtapa": 26,
+        "ExpedienteHouse": 20260150000073,
+        "ExpedienteAduana": 20265140000069,
+        "NombreEtapa": "REGISTRADO ANTE SENIAT",
+        "FechaEtapa": "13/03/2026",
+        "HoraEtapa": 142100
+      },
+      {
+        "CodigoEtapa": 175,
+        "SecuenciaEtapa": 34,
+        "ExpedienteHouse": 20260150000073,
+        "ExpedienteAduana": 20265140000069,
+        "NombreEtapa": "RECONOCIDO SENIAT",
+        "FechaEtapa": "07/04/2026",
+        "HoraEtapa": 102000
+      },
+      {
+        "CodigoEtapa": 184,
+        "SecuenciaEtapa": 36,
+        "ExpedienteHouse": 20260150000073,
+        "ExpedienteAduana": 20265140000069,
+        "NombreEtapa": "VALIDACION SENIAT",
+        "FechaEtapa": "07/04/2026",
+        "HoraEtapa": 160000
+      },
+      {
+        "CodigoEtapa": 188,
+        "SecuenciaEtapa": 42,
+        "ExpedienteHouse": 20260150000073,
+        "ExpedienteAduana": 20265140000069,
+        "NombreEtapa": "DESPACHADO",
+        "FechaEtapa": "08/04/2026",
+        "HoraEtapa": 93000
+      }
+    ],
+    "records": 6,
+    "moreRecords": false
+  },
+  "RifCliente": "J000193681",
+  "DR-MailPush-Correo": {
+    "tableId": "F01151",
+    "rowset": [
+      {
+        "CorreoCliente": "prueba@prueba.com"
+      }
+    ],
+    "records": 1,
+    "moreRecords": false
+  }
+}

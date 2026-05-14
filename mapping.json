@@ -1,0 +1,11 @@
+{
+  "101": "Recibido",
+  "166": "Tránsito",
+  "152": "Aduana",
+  "157": "Inspección",
+  "175": "En ruta",
+  "184": "Arribo local",
+  "188": "Desaduanaje",
+  "196": "Listo para entrega",
+  "statusOrder": ["Recibido", "Aduana", "Tránsito", "En ruta", "Arribo local", "Desaduanaje", "Listo para entrega"]
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Envío - Taurel</title>
+</head>
+<body style="margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#f4f6f8;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center" style="padding:20px 0;">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="background-color:#ffffff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.08);">
+                    
+                    <!-- Header con logo -->
+                    <tr>
+                        <td style="padding:20px 30px;background-color:#002399;border-radius:8px 8px 0 0;">
+                            <table width="100%">
+                                <tr>
+                                    <td style="vertical-align:middle;">
+                                        <img src="https://i.imgur.com/0UC0FuH.png" alt="Taurel Logo" style="height:40px;width:auto;display:block;border:0;" />
+                                    </td>
+                                    <td align="right" style="vertical-align:middle;">
+                                        <span style="background:#2163FF;color:#ffffff;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:bold;">{{ESTADO_ACTUAL}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding:40px;">
+                            <h1 style="color:#002399;margin:0 0 10px 0;font-size:28px;">Su mercancía está en camino</h1>
+                            <p style="color:#4a5568;font-size:16px;line-height:1.5;margin:0 0 30px 0;">
+                                Hola <strong>{{NOMBRE_CLIENTE}}</strong>,<br>
+                                Su envío internacional ha pasado por aduana y se encuentra en ruta de entrega.
+                            </p>
+
+                            <!-- Tracking Box -->
+                            <table width="100%" style="background:#F4F6F8;border-radius:8px;border-left:4px solid #2163FF;margin-bottom:30px;">
+                                <tr>
+                                    <td style="padding:20px;">
+                                        <p style="margin:0 0 8px 0;color:#6b7280;font-size:13px;text-transform:uppercase;letter-spacing:1px;">Número de Seguimiento</p>
+                                        <p style="margin:0;color:#002399;font-size:15px;font-weight:bold;letter-spacing:1px;">{{NUM_SEGUIMIENTO}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Timeline -->
+                            <table width="100%" style="margin-bottom:10px;">
+                                {{TIMELINE_HTML}}
+                            </table>
+
+                            <!-- Leyenda -->
+                            <table width="100%" style="margin-bottom:30px;">
+                                <tr>
+                                    <td style="font-size:12px;color:#4a5568; padding-top:8px;">
+                                        <table cellspacing="0" cellpadding="0" style="display:inline-table;">
+                                            <tr>
+                                                <td style="padding-right:15px;">
+                                                    <span style="display:inline-block;width:16px;height:16px;background:#2163FF;border-radius:50%;line-height:16px;text-align:center;color:white;font-size:10px;vertical-align:middle;">✓</span>
+                                                    <span style="vertical-align:middle;margin-left:4px;">Completada</span>
+                                                </td>
+                                                <td>
+                                                    <span style="display:inline-block;width:16px;height:16px;background:#E5E7EB;border-radius:50%;line-height:16px;text-align:center;color:#9CA3AF;font-size:12px;vertical-align:middle;">○</span>
+                                                    <span style="vertical-align:middle;margin-left:4px;">Pendiente</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Shipment Details -->
+                            <h3 style="color:#002399;border-bottom:2px solid #E5E7EB;padding-bottom:10px;">Detalles del Envío</h3>
+                            <table width="100%" style="margin-bottom:20px;">
+                                <tr>
+                                    <td width="50%" valign="top" style="padding-right:20px;">
+                                        <p style="margin:0 0 5px 0;color:#6b7280;font-size:12px;">ORIGEN</p>
+                                        <p style="margin:0;color:#002399;font-weight:bold;">{{ORIGEN}}</p>
+                                        <p style="margin:5px 0 0 0;color:#6b7280;font-size:13px;">{{PUERTO_ORIGEN}}</p>
+                                    </td>
+                                    <td width="50%" valign="top">
+                                        <p style="margin:0 0 5px 0;color:#6b7280;font-size:12px;">DESTINO</p>
+                                        <p style="margin:0;color:#002399;font-weight:bold;">{{DESTINO}}</p>
+                                        <p style="margin:5px 0 0 0;color:#6b7280;font-size:13px;">Entrega estimada: {{FECHA_ENTREGA}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Additional Info -->
+                            <table width="100%" style="background:#eef2ff;border-radius:6px;padding:15px;border:1px solid #d4d9ff;">
+                                <tr>
+                                    <td style="font-size:13px;color:#002399;">
+                                        <strong>📋 Importante:</strong> Tenga listos sus documentos de importación (Pedimento, Factura, Certificado de Origen) para la entrega final.
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding:30px 40px;background:#F4F6F8;border-radius:0 0 8px 8px;text-align:center;border-top:1px solid #E5E7EB;">
+                            <p style="margin:0 0 10px 0;color:#6b7280;font-size:12px;">
+                                Taurel Logística | Av. Principal, Caracas | contacto@taurel.com
+                            </p>
+                            <p style="margin:0;color:#9CA3AF;font-size:11px;">
+                                <a href="#" style="color:#6b7280;text-decoration:none;margin:0 10px;">Ver en navegador</a> | 
+                                <a href="#" style="color:#6b7280;text-decoration:none;margin:0 10px;">Desuscribirse</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

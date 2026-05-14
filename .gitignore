@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (API keys, contraseñas, etc.)
+.env
+
+# Logs y archivos temporales
+npm-debug.log*
+*.log
+
+# Archivos generados automáticamente
+correo_test.html
+correo-generado.html
+prueba.json
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
