@@ -239,7 +239,7 @@ app.post('/api/generar', (req, res) => {
     try {
         const jsonData = req.body;
         const datos = procesarEnvio(jsonData);
-        axios.post('https://logistics.taurel.com/api/mail', { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos.join(', ') })
+        axios.post(process.env.MAIL_SERVER, { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos.join(', ') })
             .then(response => console.log('Simulación de envío exitosa:', response.data))
             .catch(error => console.error('Error en simulación de envío:', error.message));
         res.json({ ok: true, asunto: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, destinatarios: datos.correos, html: datos.html });
