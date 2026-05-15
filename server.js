@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
+const { default: axios } = require('axios');
 
 dotenv.config();
 
@@ -238,6 +239,9 @@ app.post('/api/generar', (req, res) => {
     try {
         const jsonData = req.body;
         const datos = procesarEnvio(jsonData);
+        axios.post('https://logistics.taurel.com/api/mail', { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos })
+            .then(response => console.log('Simulación de envío exitosa:', response.data))
+            .catch(error => console.error('Error en simulación de envío:', error.message));
         res.json({ ok: true, asunto: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, destinatarios: datos.correos, html: datos.html });
     } catch (error) {
         console.error('Error:', error.message);
