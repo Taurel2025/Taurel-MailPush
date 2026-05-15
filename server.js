@@ -235,7 +235,7 @@ function procesarEnvio(jsonData) {
 
 app.get('/', (req, res) => res.send('✅ API de generación de correos Taurel funcionando. Usa POST /api/generar'));
 
-app.post('/api/generar', (req, res) => {
+app.post('/generar', (req, res) => {
     try {
         const jsonData = req.body;
         const datos = procesarEnvio(jsonData);
