@@ -13,10 +13,10 @@ app.use(express.json());
 
 app.use((req, res, next) => {
     console.log('----------- Nueva petición -----------');
-    console.log('Método:', req.method);
-    console.log('URL:', req.originalUrl);
-    console.log('Headers:', JSON.stringify(req.headers, null, 2));
-    console.log('Body:', JSON.stringify(req.body, null, 2));
+    // console.log('Método:', req.method);
+    // console.log('URL:', req.originalUrl);
+    // console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    // console.log('Body:', JSON.stringify(req.body, null, 2));
     next();
 });
 
@@ -63,6 +63,7 @@ function extraerRowset(contenedor, mapping = null) {
         raw = contenedor.rowset;
     } else {
         const keys = Object.keys(contenedor);
+        console.log('Keys encontradas en contenedor:', keys);
         const dataBrowserKey = keys.find(k => k.startsWith('fs_DATABROWSE_'));
         if (dataBrowserKey) {
             const browser = contenedor[dataBrowserKey];
@@ -94,8 +95,10 @@ function extraerRowset(contenedor, mapping = null) {
 function procesarEnvio(jsonData) {
     if (!jsonData) throw new Error('Cuerpo JSON vacío');
 
-    const mappingEtapas = { CodigoEtapa: 'F0005_KY', NombreEtapa: 'F0005_DL01' };
+    const mappingEtapas = { CodigoEtapa: 'CodigoEtapa', NombreEtapa: 'NombreEtapa' };
+    console.log('Extrayendo etapas posibles...', mappingEtapas);
     const etapasPosiblesRaw = extraerRowset(jsonData["DR-MailPush-Etapas"], mappingEtapas);
+    console.log('Etapas posibles extraídas:', etapasPosiblesRaw.length, etapasPosiblesRaw.map(e => e.CodigoEtapa));
     if (etapasPosiblesRaw.length === 0) throw new Error('DR-MailPush-Etapas está vacío');
     const etapasPosibles = etapasPosiblesRaw.map(e => ({
         codigo: e.CodigoEtapa,
@@ -103,12 +106,12 @@ function procesarEnvio(jsonData) {
     }));
 
     const mappingRealizadas = {
-        CodigoEtapa: 'F55SA101_Y55CODETA',
-        SecuenciaEtapa: 'F55SA101_Y55SECUEN' in (jsonData["DR-MailPush-V55SA176"]?.fs_DATABROWSE_V55SA176?.data?.gridData?.rowset?.[0] || {}) ? 'F55SA101_Y55SECUEN' : 'F55SA100_Y55SECUEN',
-        ExpedienteHouse: 'F55SA101_Y55HOJOB',
-        ExpedienteAduana: 'F55SA101_Y55IMJOB',
-        FechaEtapa: 'F55SA101_Y55FEETAPA',
-        HoraEtapa: 'F55SA101_Y55HETAPA'
+        CodigoEtapa: 'CodigoEtapa',
+        SecuenciaEtapa: 'SecuenciaEtapa' in (jsonData["DR-MailPush-V55SA176"]?.fs_DATABROWSE_V55SA176?.data?.gridData?.rowset?.[0] || {}) ? 'F55SA101_Y55SECUEN' : 'F55SA100_Y55SECUEN',
+        ExpedienteHouse: 'ExpedienteHouse',
+        ExpedienteAduana: 'ExpedienteAduana',
+        FechaEtapa: 'FechaEtapa',
+        HoraEtapa: 'HoraEtapa'
     };
     const etapasRealizadasRaw = extraerRowset(jsonData["DR-MailPush-V55SA176"], mappingRealizadas);
     if (etapasRealizadasRaw.length === 0) throw new Error('DR-MailPush-V55SA176 está vacío');
@@ -129,16 +132,18 @@ function procesarEnvio(jsonData) {
         .sort((a, b) => a.fechaObj - b.fechaObj);
 
     let correos = [];
+    let cc = '';
     const campoCorreo = jsonData["DR-MailPush-Correo"] || jsonData["DR-MailPush-CorreoCliente"];
     if (campoCorreo) {
         try {
-            const filasCorreo = extraerRowset(campoCorreo, { CorreoCliente: 'F01151_EMAL' });
+            const filasCorreo = extraerRowset(campoCorreo, { CorreoCliente: 'CorreoCliente' });
             correos = filasCorreo.map(r => r.CorreoCliente.trim()).filter(Boolean);
         } catch (e) {}
     }
-    if (correos.length === 0 && jsonData.CorreoUsuario) correos = [jsonData.CorreoUsuario.trim()];
-
-    const nombreCliente = jsonData.NombreCliente || "Cliente";
+    // if (correos.length === 0 && jsonData.CorreoUsuario) correos = [jsonData.CorreoUsuario.trim()];
+    cc = jsonData.CorreoUsuario ? jsonData.CorreoUsuario.trim() : '';
+    const nombreCliente = jsonData.NombreCompleto || "Cliente";
+    
     const numSeguimiento = etapasRealizadas[0].ExpedienteHouse.toString();
     const numManifiesto = jsonData.NumeroMaster || jsonData.NumeroManifiesto || '';
 
@@ -230,7 +235,7 @@ function procesarEnvio(jsonData) {
         .replace('{{DESTINO}}', destino)
         .replace('{{FECHA_ENTREGA}}', fechaEntrega);
 
-    return { html, nombreCliente, numSeguimiento, correos };
+    return { html, nombreCliente, numSeguimiento, correos, cc };
 }
 
 app.get('/', (req, res) => res.send('✅ API de generación de correos Taurel funcionando. Usa POST /api/generar'));
@@ -239,10 +244,10 @@ app.post('/generar', (req, res) => {
     try {
         const jsonData = req.body;
         const datos = procesarEnvio(jsonData);
-        axios.post(process.env.MAIL_SERVER, { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos.join(', ') })
+        axios.post(process.env.MAIL_SERVER, { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos.join(', '), cc: datos.cc })
             .then(response => console.log('Simulación de envío exitosa:', response.data))
             .catch(error => console.error('Error en simulación de envío:', error.message));
-        res.json({ ok: true, asunto: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, destinatarios: datos.correos, html: datos.html });
+        res.json({ ok: true, asunto: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, destinatarios: datos.correos, cc: datos.cc, html: datos.html });
     } catch (error) {
         console.error('Error:', error.message);
         res.status(400).json({ ok: false, error: error.message });
