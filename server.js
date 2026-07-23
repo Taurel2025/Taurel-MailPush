@@ -95,7 +95,7 @@ function extraerRowset(contenedor, mapping = null) {
 function procesarEnvio(jsonData) {
     if (!jsonData) throw new Error('Cuerpo JSON vacío');
 
-    const mappingEtapas = { CodigoEtapa: 'CodigoEtapa', NombreEtapa: 'NombreEtapa' };
+    const mappingEtapas = { CodigoEtapa: 'F0005_KY', NombreEtapa: 'F0005_DL01' };
     console.log('Extrayendo etapas posibles...', mappingEtapas);
     const etapasPosiblesRaw = extraerRowset(jsonData["DR-MailPush-Etapas"], mappingEtapas);
     console.log('Etapas posibles extraídas:', etapasPosiblesRaw.length, etapasPosiblesRaw.map(e => e.CodigoEtapa));
