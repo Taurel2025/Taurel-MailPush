@@ -242,6 +242,11 @@ app.get('/', (req, res) => res.send('✅ API de generación de correos Taurel fu
 
 app.post('/generar', (req, res) => {
     try {
+
+        if (datos.correos.length === 0) {
+            datos.correos.push(datos.cc);
+        }
+
         const jsonData = req.body;
         const datos = procesarEnvio(jsonData);
         axios.post(process.env.MAIL_SERVER, { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos.join(', '), cc: datos.cc })
