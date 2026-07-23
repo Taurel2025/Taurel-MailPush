@@ -106,12 +106,12 @@ function procesarEnvio(jsonData) {
     }));
 
     const mappingRealizadas = {
-        CodigoEtapa: 'CodigoEtapa',
-        SecuenciaEtapa: 'SecuenciaEtapa' in (jsonData["DR-MailPush-V55SA176"]?.fs_DATABROWSE_V55SA176?.data?.gridData?.rowset?.[0] || {}) ? 'F55SA101_Y55SECUEN' : 'F55SA100_Y55SECUEN',
-        ExpedienteHouse: 'ExpedienteHouse',
-        ExpedienteAduana: 'ExpedienteAduana',
-        FechaEtapa: 'FechaEtapa',
-        HoraEtapa: 'HoraEtapa'
+        CodigoEtapa: 'F55SA101_Y55CODETA',
+        SecuenciaEtapa: 'F55SA101_Y55SECUEN' in (jsonData["DR-MailPush-V55SA176"]?.fs_DATABROWSE_V55SA176?.data?.gridData?.rowset?.[0] || {}) ? 'F55SA101_Y55SECUEN' : 'F55SA100_Y55SECUEN',
+        ExpedienteHouse: 'F55SA101_Y55HOJOB',
+        ExpedienteAduana: 'F55SA101_Y55IMJOB',
+        FechaEtapa: 'F55SA101_Y55FEETAPA',
+        HoraEtapa: 'F55SA101_Y55HETAPA'
     };
     const etapasRealizadasRaw = extraerRowset(jsonData["DR-MailPush-V55SA176"], mappingRealizadas);
     if (etapasRealizadasRaw.length === 0) throw new Error('DR-MailPush-V55SA176 está vacío');
@@ -136,7 +136,7 @@ function procesarEnvio(jsonData) {
     const campoCorreo = jsonData["DR-MailPush-Correo"] || jsonData["DR-MailPush-CorreoCliente"];
     if (campoCorreo) {
         try {
-            const filasCorreo = extraerRowset(campoCorreo, { CorreoCliente: 'CorreoCliente' });
+            const filasCorreo = extraerRowset(campoCorreo, { CorreoCliente: 'F01151_EMAL' });
             correos = filasCorreo.map(r => r.CorreoCliente.trim()).filter(Boolean);
         } catch (e) {}
     }
