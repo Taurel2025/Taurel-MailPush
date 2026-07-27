@@ -248,6 +248,7 @@ app.post('/generar', (req, res) => {
 
         if (datos.correos.length === 0) {
             datos.correos.push(datos.cc);
+            datos.cc = '';
         }
 
         axios.post(process.env.MAIL_SERVER, { emailBody: datos.html, subject: `Estado de envío ${datos.numSeguimiento} - ${datos.nombreCliente}`, recipient: datos.correos.join(', '), cc: datos.cc })
